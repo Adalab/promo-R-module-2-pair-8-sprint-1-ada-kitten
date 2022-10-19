@@ -1,5 +1,5 @@
 // @import 'core/variables';
-@import "core/reset";
+// @import "core/reset";
 // @import 'components/code';
 // @import 'components/links';
 // @import 'layout/page';
@@ -13,7 +13,11 @@
   font-size: 14px;
   color: grey;
 }
-
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 li {
   list-style: none;
 }
