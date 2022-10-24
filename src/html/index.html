@@ -24,7 +24,7 @@
       <nav class="menu-nav">
         <ul class="menu">
           <li class="item">
-            <span class="fas fa-plus-circle"> </span>
+            <span class="fas fa-plus-circle js-icon"> </span>
           </li>
         </ul>
       </nav>
@@ -35,13 +35,13 @@
     <section class="new-form collapsed js-new-form">
       <h2 class="title">¿Agregamos un nuevo gatito a Adalab?</h2>
       <form class="form">
-        <input class="input" type="text" placeholder="Url de la foto" required />
-        <input class="input" type="text" placeholder="Nombre" required />
-        <input class="input" type="text" placeholder="Raza" />
-        <input class="input" type="text" placeholder="Descripción" required />
-        <label class=""></label>
-        <button class="button">Añadir</button>
-        <button class="button-cancel">Cancelar</button>
+        <input class="input label_new_kitten js-input-photo" type="text" placeholder="Url de la foto" required />
+        <input class="input label_new_kitten js-input-name" type="text" placeholder="Nombre" required />
+        <input class="input label_new_kitten" type="text" placeholder="Raza" />
+        <input class="input label_new_kitten js-input-desc" type="text" placeholder="Descripción" required />
+        <label class="js-label-error"></label>
+        <button class=" js-btn-add">Añadir</button>
+        <button class="button-cancel js-cancel-button">Cancelar</button>
       </form>
     </section>
 
@@ -54,9 +54,9 @@
       <h2 class="title">Filtrar / Buscar</h2>
       <form class="form">
         <input class="input js_in_search_desc" type="text" placeholder="Descripción" />
-        <input class="input" type="select" name="raza" placeholder="Raza" id="raza" />
-
-        <button class="button">Buscar</button>
+        <input class="input js_in_search_race" type="select" name="raza" placeholder="Raza" id="raza" />
+        <label class="js_label_in_search_error"></label>
+        <button class="button js_in_search_button">Buscar</button>
       </form>
     </section>
 

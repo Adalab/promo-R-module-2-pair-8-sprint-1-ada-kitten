@@ -58,7 +58,18 @@ const Kitten3 =
 let NewKitten = document.querySelector('.js-list');
 const NewKittenForm = document.querySelector('.js-new-form');
 const input_search_desc = document.querySelector('.js_in_search_desc');
-
+const input_search_race = document.querySelector('.js_in_search_race');
+const labelMessageSearchError = document.querySelector(
+  '.js_label_in_search_error'
+);
+const searchButton = document.querySelector('.js_in_search_button');
+const headerIcon = document.querySelector('.js-icon');
+const addBtn = document.querySelector('.js-btn-add');
+const inputDesc = document.querySelector('.js-input-desc');
+const inputPhoto = document.querySelector('.js-input-photo');
+const inputName = document.querySelector('.js-input-name');
+const labelMesageError = document.querySelector('.js-label-error');
+const cancelbtn = document.querySelector('.js-cancel-button');
 
 // Actions
 // NewKittenForm.classList.remove('collapsed');
@@ -66,8 +77,7 @@ const input_search_desc = document.querySelector('.js_in_search_desc');
 input_search_desc.value = 'juguetón';
 const descrSearchText = input_search_desc.value;
 
-
-if( KittenDesc1.includes(descrSearchText) ) {
+if (KittenDesc1.includes(descrSearchText)) {
   NewKitten.innerHTML = Kitten1;
 }
 
@@ -88,8 +98,39 @@ if (NewKittenForm.classList.contains('collapsed')) {
   NewKittenForm.classList.add('collapsed');
 }
 
-//EVENTOS
-// llamar a la etiqueta de img
-// escuchar un evento sobre la etiqueta usando click
-// 
+headerIcon.addEventListener('click', (event) => {
+  event.preventDefault();
+  if (NewKittenForm.classList.contains('collapsed')) {
+    NewKittenForm.classList.remove('collapsed');
+  } else {
+    NewKittenForm.classList.add('collapsed');
+  }
+});
 
+addBtn.addEventListener('click', (event) => {
+  event.preventDefault(event);
+  const valueDesc = inputDesc.value;
+  const valuePhoto = inputPhoto.value;
+  const valueName = inputName.value;
+
+  if (valueDesc === '' || valuePhoto === '' || valueName === '') {
+    labelMesageError.innerHTML = 'Debe rellenar todos los valores';
+  }
+});
+
+searchButton.addEventListener('click', (event) => {
+  event.preventDefault(event);
+  const valueSearchDesc = input_search_desc.value;
+  const valueSearchRace = input_search_race.value;
+
+  if (valueSearchDesc === '' || valueSearchRace === '') {
+    labelMessageSearchError.innerHTML = 'Debe rellenar todos los valores';
+  }
+});
+
+cancelbtn.addEventListener('click', (event) => {
+  event.preventDefault(event);
+  let emptyInput = document.querySelector('.label_new_kitten');
+  emptyInput.value = '';
+  NewKittenForm.classList.add('collapsed');
+});
