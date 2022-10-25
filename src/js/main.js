@@ -138,7 +138,7 @@ addBtn.addEventListener('click', (event) => {
   let valuePhoto = inputPhoto.value;
   let valueName = inputName.value;
   let valueRace = inputRace.value;
-  console.log(valueDesc);
+  // console.log(valueDesc);
   if (valueDesc === '' || valuePhoto === '' || valueName === '') {
     labelMesageError.innerHTML = 'Debe rellenar todos los valores';
   } else {
