@@ -68,6 +68,7 @@ const addBtn = document.querySelector('.js-btn-add');
 const inputDesc = document.querySelector('.js-input-desc');
 const inputPhoto = document.querySelector('.js-input-photo');
 const inputName = document.querySelector('.js-input-name');
+const inputRace = document.querySelector('.js-input-race');
 const labelMesageError = document.querySelector('.js-label-error');
 const cancelbtn = document.querySelector('.js-cancel-button');
 
@@ -92,34 +93,45 @@ if (KittenDesc3.includes(descrSearchText)) {
 // NewKitten.innerHTML = Kitten1 + Kitten2 + Kitten3;
 //we don't need to add them all
 
-if (NewKittenForm.classList.contains('collapsed')) {
+//FUNCTIONS & EVENTS
+function showNewCatForm() {
   NewKittenForm.classList.remove('collapsed');
-} else {
+}
+function hideNewCatForm() {
   NewKittenForm.classList.add('collapsed');
 }
 
-headerIcon.addEventListener('click', (event) => {
+function handleClickNewCatForm(event) {
   event.preventDefault();
   if (NewKittenForm.classList.contains('collapsed')) {
-    NewKittenForm.classList.remove('collapsed');
+    showNewCatForm();
   } else {
-    NewKittenForm.classList.add('collapsed');
+    hideNewCatForm();
   }
-});
+}
 
+headerIcon.addEventListener('click', handleClickNewCatForm);
+
+//be careful with the order in the parameters
+function renderKitten(url, desc, name, race) {
+  return `<li class="card"><img class="card_img" src="${url}" alt="gatito" /><h3 class="card_title">${name}</h3><h4 class="card_race">${race}</h4><p class="card_description">${desc}</p></li>`;
+}
 addBtn.addEventListener('click', (event) => {
-  event.preventDefault(event);
-  const valueDesc = inputDesc.value;
-  const valuePhoto = inputPhoto.value;
-  const valueName = inputName.value;
-
+  event.preventDefault();
+  let valueDesc = inputDesc.value;
+  let valuePhoto = inputPhoto.value;
+  let valueName = inputName.value;
+  let valueRace = inputRace.value;
+  console.log(valueDesc);
   if (valueDesc === '' || valuePhoto === '' || valueName === '') {
     labelMesageError.innerHTML = 'Debe rellenar todos los valores';
+  } else {
+    NewKitten.innerHTML += renderKitten(valuePhoto, valueDesc, valueName, valueRace);
   }
 });
 
 searchButton.addEventListener('click', (event) => {
-  event.preventDefault(event);
+  event.preventDefault();
   const valueSearchDesc = input_search_desc.value;
   const valueSearchRace = input_search_race.value;
 
@@ -129,7 +141,7 @@ searchButton.addEventListener('click', (event) => {
 });
 
 cancelbtn.addEventListener('click', (event) => {
-  event.preventDefault(event);
+  event.preventDefault();
   let emptyInput = document.querySelector('.label_new_kitten');
   emptyInput.value = '';
   NewKittenForm.classList.add('collapsed');
