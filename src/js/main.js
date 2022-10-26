@@ -56,6 +56,8 @@ const inputName = document.querySelector('.js-input-name');
 const inputRace = document.querySelector('.js-input-race');
 const labelMesageError = document.querySelector('.js-label-error');
 const cancelbtn = document.querySelector('.js-cancel-button');
+const descrSearchText = input_search_desc.value;
+const raceSearchText = input_search_race.value;
 
 //Functions
 
@@ -81,50 +83,68 @@ function renderKitten(url, desc, name, race) {
   return `<li class="card"><img class="card_img" src="${url}" alt="gatito" /><h3 class="card_title">${name}</h3><h4 class="card_race">${race}</h4><p class="card_description">${desc}</p></li>`;
 }
 
+// FUNCTION - CANCEL NEW KITTEN
+function cancelNewKitten(event) {
+  event.preventDefault();
+  let emptyInput = document.querySelector('.label_new_kitten');
+  emptyInput.value = '';
+  NewKittenForm.classList.add('collapsed');
+}
+
+//FUNCTION - SEARCH KITTENS BY INFO (SEARCH)
+function filterKitten() {
+  if (KittenDesc1.includes(descrSearchText)) {
+    NewKitten.innerHTML = Kitten1;
+  }
+
+  if (KittenDesc2.includes(descrSearchText)) {
+    NewKitten.innerHTML += Kitten2;
+  }
+
+  if (KittenDesc3.includes(descrSearchText)) {
+    NewKitten.innerHTML += Kitten3;
+  }
+}
+
+//FUNCTION - EMPTY FILTER (SEARCH)
+function emptyFilter() {
+  labelMessageSearchError.innerHTML = 'Debe rellenar todos los valores';
+}
+
 //Events
 
 //EVENT - RACE NOT SPECIFIED (SEARCH)
-if (KittenRace1 === '') {
-  KittenNewRace1 = 'No se ha especificado la raza';
-} else {
-  KittenNewRace1 = KittenRace1;
+//Si recibe una palabra en el primer parámetro devolverá un HTML con la etiqueta <h3>.
+//<h3 class="card_race">race</h3>
+//Si recibe un string vacío como parámetros devolverá código HTML, pero esta vez será un texto diciéndo que no se ha especificado la raza
+//<p class="card_race">No se ha especificado la raza</p>
+function renderRace(kittenRace) {
+  if (KittenRace === '') {
+    KittenNewRace1 = 'No se ha especificado la raza';
+  } else {
+    KittenNewRace1 = KittenRace1;
+  }
+
+  if (KittenRace === '') {
+    KittenNewRace2 = 'No se ha especificado la raza';
+  } else {
+    KittenNewRace2 = KittenRace2;
+  }
+
+  if (KittenRace === '') {
+    KittenNewRace3 = 'No se ha especificado la raza';
+  } else {
+    KittenNewRace3 = KittenRace3;
+  }
 }
 
-if (KittenRace2 === '') {
-  KittenNewRace2 = 'No se ha especificado la raza';
-} else {
-  KittenNewRace2 = KittenRace2;
-}
-
-if (KittenRace3 === '') {
-  KittenNewRace3 = 'No se ha especificado la raza';
-} else {
-  KittenNewRace3 = KittenRace3;
-}
-
-//EVENT - SEARCH SPECIFIC KITTEN INFO (SEARCH)
-input_search_desc.value = 'juguetón';
-const descrSearchText = input_search_desc.value;
-
-if (KittenDesc1.includes(descrSearchText)) {
-  NewKitten.innerHTML = Kitten1;
-}
-
-if (KittenDesc2.includes(descrSearchText)) {
-  NewKitten.innerHTML += Kitten2;
-}
-
-if (KittenDesc3.includes(descrSearchText)) {
-  NewKitten.innerHTML += Kitten3;
-}
-
+//EVENT - SEARCH SPECIFIC KITTEN INFO AND EMPTY FILTER (SEARCH)
 searchButton.addEventListener('click', (event) => {
   event.preventDefault();
-  const valueSearchDesc = input_search_desc.value;
-  const valueSearchRace = input_search_race.value;
-
-  if (valueSearchDesc === '' || valueSearchRace === '') {
-    labelMessageSearchError.innerHTML = 'Debe rellenar todos los valores';
+  if (descrSearchText === '' || raceSearchText === '') {
+    emptyFilter();
+  } else {
+    filterKitten();
   }
 });
 
@@ -152,9 +172,4 @@ addBtn.addEventListener('click', (event) => {
 });
 
 // EVENT - CANCEL NEW KITTEN (NEW KITTEN FORM)
-cancelbtn.addEventListener('click', (event) => {
-  event.preventDefault();
-  let emptyInput = document.querySelector('.label_new_kitten');
-  emptyInput.value = '';
-  NewKittenForm.classList.add('collapsed');
-});
+cancelbtn.addEventListener('click', cancelNewKitten);
