@@ -26,24 +26,24 @@ const KittenDesc3 =
   'Ruiseño, juguetón, le gusta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!';
 const KittenRace3 = 'Siames';
 //VARIABLES - EMPTY RACE FIELD (SEARCH FILTER)
-let KittenNewRace1 = '';
-let KittenNewRace2 = '';
-let KittenNewRace3 = '';
+// let KittenNewRace1 = '';
+// let KittenNewRace2 = '';
+// let KittenNewRace3 = '';
 //KITTEN "LI" ELEMENTS
 const Kitten1 =
   //   '<li class="card"><article><img class="card_img" src="https://ychef.files.bbci.co.uk/976x549/p07ryyyj.jpg" alt="gatito" /><h3 class="card_title">Anastacio</h3><h4 class="card_race">British Shorthair</h4><p class="card_description">Ruiseño, juguetón, le guta estar tranquilo y que nadie lemoleste. Es una maravilla acariciarle!</p></article></li>';
-  `<li class="card"><article><img class="card_img" src="${KittenImg1}" alt="gatito" /><h3 class="card_title">${KittenName1UC}</h3><h4 class="card_race">${KittenNewRace1}</h4><p class="card_description">${KittenDesc1}</p></article></li>`;
+  `<li class="card"><article><img class="card_img" src="${KittenImg1}" alt="gatito" /><h3 class="card_title">${KittenName1UC}</h3>${renderRace(KittenRace1)}<p class="card_description">${KittenDesc1}</p></article></li>`;
 const Kitten2 =
   // '<li class="card"><img class="card_img"src="https://images.emedicinehealth.com/images/article/main_image/cat-scratch-disease.jpg" alt="gatito" /><h3 class="card_title">Fiona</h3><h4 class="card_race">British Shorthair</h4><p class="card_description">Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste.Es una maravilla acariciarle!</p></li>';
-  `<li class="card"><article><img class="card_img" src="${KittenImg2}" alt="gatito" /><h3 class="card_title">${KittenName2UC}</h3><h4 class="card_race">${KittenNewRace2}</h4><p class="card_description">${KittenDesc2}</p></article></li>`;
+  `<li class="card"><article><img class="card_img" src="${KittenImg2}" alt="gatito" /><h3 class="card_title">${KittenName2UC}</h3>${renderRace(KittenRace2)}<p class="card_description">${KittenDesc2}</p></article></li>`;
 const Kitten3 =
   // '<li class="card"><img class="card_img"src="https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/newscms/2019_39/3021711/190923-cat-pet-stock-cs-1052a.jpg"alt="gatito" /><h3 class="card_title">Cielo</h3><h4 class="card_race">British Shorthair</h4><p class="card_description">Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste.Es una maravilla acariciarle!</p></li>';
-  `<li class="card"><img class="card_img" src="${KittenImg3}" alt="gatito" /><h3 class="card_title">${KittenName3UC}</h3><h4 class="card_race">${KittenNewRace3}</h4><p class="card_description">${KittenDesc3}</p></li>`;
+  `<li class="card"><img class="card_img" src="${KittenImg3}" alt="gatito" /><h3 class="card_title">${KittenName3UC}</h3><h4 class="card_race">${renderRace(KittenRace3)}</h4><p class="card_description">${KittenDesc3}</p></li>`;
 //QUERY SELECTORS
 let NewKitten = document.querySelector('.js-list');
 const NewKittenForm = document.querySelector('.js-new-form');
-const input_search_desc = document.querySelector('.js_in_search_desc');
-const input_search_race = document.querySelector('.js_in_search_race');
+const inputSearchDesc = document.querySelector('.js_in_search_desc');
+const inputSearchRace = document.querySelector('.js_in_search_race');
 const labelMessageSearchError = document.querySelector(
   '.js_label_in_search_error'
 );
@@ -54,11 +54,9 @@ const inputDesc = document.querySelector('.js-input-desc');
 const inputPhoto = document.querySelector('.js-input-photo');
 const inputName = document.querySelector('.js-input-name');
 const inputRace = document.querySelector('.js-input-race');
-const labelMesageError = document.querySelector('.js-label-error');
-const cancelbtn = document.querySelector('.js-cancel-button');
-const descrSearchText = input_search_desc.value;
-const raceSearchText = input_search_race.value;
-
+const labelMessageError = document.querySelector('.js-label-error');
+const cancelBtn = document.querySelector('.js-cancel-button');
+const descSearchText = inputSearchDesc.value;
 //Functions
 
 //FUNCTION - SHOW / HIDE "NEW KITTEN" FORM
@@ -80,7 +78,7 @@ function handleClickNewCatForm(event) {
 //FUNCTION - INCLUDE NEW KITTEN
 //be careful with the order in the parameters
 function renderKitten(url, desc, name, race) {
-  return `<li class="card"><img class="card_img" src="${url}" alt="gatito" /><h3 class="card_title">${name}</h3><h4 class="card_race">${race}</h4><p class="card_description">${desc}</p></li>`;
+  return `<li class="card"><img class="card_img" src="${url}" alt="gatito" /><h3 class="card_title">${name}</h3><h4 class="card_race">${renderRace(race)}</h4><p class="card_description">${desc}</p></li>`;
 }
 
 // FUNCTION - CANCEL NEW KITTEN
@@ -93,15 +91,16 @@ function cancelNewKitten(event) {
 
 //FUNCTION - SEARCH KITTENS BY INFO (SEARCH)
 function filterKitten() {
-  if (KittenDesc1.includes(descrSearchText)) {
+  if (KittenDesc1.includes(descSearchText)) {
+    // console.log("Pinta kitten");
     NewKitten.innerHTML = Kitten1;
   }
 
-  if (KittenDesc2.includes(descrSearchText)) {
+  if (KittenDesc2.includes(descSearchText)) {
     NewKitten.innerHTML += Kitten2;
   }
 
-  if (KittenDesc3.includes(descrSearchText)) {
+  if (KittenDesc3.includes(descSearchText)) {
     NewKitten.innerHTML += Kitten3;
   }
 }
@@ -110,39 +109,30 @@ function filterKitten() {
 function emptyFilter() {
   labelMessageSearchError.innerHTML = 'Debe rellenar todos los valores';
 }
+//FUNCTION - RACE NOT SPECIFIED (SEARCH)
+function renderRace(kittenRace) {
+  // console.log("Estoy aquí");
+  if (kittenRace === '') {
+    // console.log("Sigo aquí");
+    return '<p class="card_race">No se ha especificado la raza</p>';
+  } else {
+    // console.log("Holi");
+    return `<h3 class="card_race">${kittenRace}</h3>`;
+  }
+}
 
 //Events
 
-//EVENT - RACE NOT SPECIFIED (SEARCH)
-//Si recibe una palabra en el primer parámetro devolverá un HTML con la etiqueta <h3>.
-//<h3 class="card_race">race</h3>
-//Si recibe un string vacío como parámetros devolverá código HTML, pero esta vez será un texto diciéndo que no se ha especificado la raza
-//<p class="card_race">No se ha especificado la raza</p>
-function renderRace(kittenRace) {
-  if (KittenRace === '') {
-    KittenNewRace1 = 'No se ha especificado la raza';
-  } else {
-    KittenNewRace1 = KittenRace1;
-  }
 
-  if (KittenRace === '') {
-    KittenNewRace2 = 'No se ha especificado la raza';
-  } else {
-    KittenNewRace2 = KittenRace2;
-  }
-
-  if (KittenRace === '') {
-    KittenNewRace3 = 'No se ha especificado la raza';
-  } else {
-    KittenNewRace3 = KittenRace3;
-  }
-}
 
 //EVENT - SEARCH SPECIFIC KITTEN INFO AND EMPTY FILTER (SEARCH)
 searchButton.addEventListener('click', (event) => {
   event.preventDefault();
-  if (descrSearchText === '' || raceSearchText === '') {
+  const raceSearchText = inputSearchRace.value;
+  if (descSearchText === '' && raceSearchText === '') {
     emptyFilter();
+  } else if (descSearchText !== '' && raceSearchText === '') {
+    filterKitten();
   } else {
     filterKitten();
   }
@@ -160,16 +150,16 @@ addBtn.addEventListener('click', (event) => {
   let valueRace = inputRace.value;
   // console.log(valueDesc);
   if (valueDesc === '' || valuePhoto === '' || valueName === '') {
-    labelMesageError.innerHTML = 'Debe rellenar todos los valores';
+    labelMessageError.innerHTML = 'Debe rellenar todos los valores';
   } else {
     NewKitten.innerHTML += renderKitten(
       valuePhoto,
       valueDesc,
       valueName,
-      valueRace
+      valueRace,
     );
   }
 });
 
 // EVENT - CANCEL NEW KITTEN (NEW KITTEN FORM)
-cancelbtn.addEventListener('click', cancelNewKitten);
+cancelBtn.addEventListener('click', cancelNewKitten);
