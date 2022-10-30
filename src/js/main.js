@@ -71,7 +71,7 @@ const Kitten3 =
 //QUERY SELECTORS / HTML DOM ELEMENTS
 
 //List
-let NewKitten = document.querySelector('.js-list');
+const NewKitten = document.querySelector('.js-list');
 
 //Search
 const inputSearchDesc = document.querySelector('.js_in_search_desc');
@@ -91,6 +91,11 @@ const inputRace = document.querySelector('.js-input-race');
 const addBtn = document.querySelector('.js-btn-add');
 const cancelBtn = document.querySelector('.js-cancel-button');
 const labelMessageError = document.querySelector('.js-label-error');
+
+let kittenData = {};
+
+const descSearchValue = inputSearchDesc.value; //values cogidos del html directo, no del evento input
+const raceSearchValue = inputSearchRace.value; //values cogidos del html directo, no del evento input
 
 //FUNCTIONS
 
@@ -112,12 +117,24 @@ function handleClickNewCatForm(event) {
 
 //FUNCTION - Include new kitten through form
 //(be careful with the order in the parameters)
+//change to include any kind of kitten through form or not
 function renderKitten(kittenData) {
-  return `<li class="card"><img class="card_img" src="${kittenData}.img" alt="gatito" /><h3 class="card_title">${kittenData}.name</h3><h4 class="card_race">${renderRace(
-    kittenData.race
-  )}</h4><p class="card_description">${kittenData}.desc</p></li>`;
+  NewKittenForm.addEventListener('input', (event) => {
+    kittenData = {
+      img: inputValues[0],
+      name: inputValues[1],
+      race: inputValues[2],
+      desc: inputValues[3],
+    };
+    return `<li class="card"><img class="card_img" src="${
+      kittenData.img
+    }" alt="gatito" /><h3 class="card_title">${
+      kittenData.name
+    }.name</h3><h4 class="card_race">${renderRace(
+      kittenData.race
+    )}</h4><p class="card_description">${kittenData.desc}.desc</p></li>`;
+  });
 }
-//Algo en render kitten no funciona y no nos deja imprimir los gatitos aunque la funcion creada para ello esté bien. No le gusta que de KittenData le saquemos las propiedades.
 
 // FUNCTION - Cancel New Kitten
 function cancelNewKitten(event) {
@@ -134,8 +151,9 @@ function cancelNewKitten(event) {
 
 //FUNCTION - Search Kittens by info (SEARCH)
 function filterKitten() {
+  let kittenList = '';
+
   if (kittenData_1.desc.includes(descSearchValue)) {
-    // console.log("Pinta kitten");
     kittenList = Kitten1;
   }
 
@@ -149,6 +167,8 @@ function filterKitten() {
 
   NewKitten.innerHTML = kittenList;
 }
+
+//Problemas con filterkitten
 
 //FUNCTION - Empty filter (SEARCH)
 function emptyFilter() {
@@ -168,10 +188,9 @@ function renderRace(kittenRace) {
 }
 
 // FUNCTION - Kitten List
-let i = 0;
-
 function renderKittenList(KittenArray) {
   NewKitten.innerHTML = '';
+  let i = 0;
   for (i = 0; i <= KittenArray.length; i++) {
     NewKitten.innerHTML += renderKitten(KittenArray[i]);
   }
@@ -184,8 +203,6 @@ renderKittenList(kittenDataList);
 //EVENT - Search info (SEARCH)
 searchButton.addEventListener('click', (event) => {
   event.preventDefault();
-  const descSearchValue = inputSearchDesc.value; //values cogidos del html directo, no del evento input
-  const raceSearchValue = inputSearchRace.value; //values cogidos del html directo, no del evento input
   if (descSearchValue === '' && raceSearchValue === '') {
     emptyFilter();
   } else if (descSearchValue !== '' && raceSearchValue === '') {
