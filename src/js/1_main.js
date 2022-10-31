@@ -1,5 +1,10 @@
 //FUNCTIONS
 
+// Function - to lowercase text
+const toLowerCaseText = (text) => {
+  return text.toLowerCase();
+};
+
 //Function - Show / Hide kitten Form (FORM)
 function showNewCatForm() {
   NewKittenForm.classList.remove('collapsed');
@@ -30,17 +35,36 @@ function cancelNewKitten(event) {
 //Functions - Search Kittens by info (SEARCH)
 function filterKittenOnlyDesc() {
   let list = '';
-  const descValue = inputSearchDesc.value;
-
-  if (kittenDataList[0].desc.includes(descValue)) {
+  const descValue = toLowerCaseText(inputSearchDesc.value);
+  // console.log(typeof raceValue);
+  // console.log(raceValue);
+  if (toLowerCaseText(kittenDataList[0].desc).includes(descValue)) {
     list = Kitten1;
   }
 
-  if (kittenDataList[1].desc.includes(descValue)) {
+  if (toLowerCaseText(kittenDataList[1].desc).includes(descValue)) {
     list += Kitten2;
   }
 
-  if (kittenDataList[2].desc.includes(descValue)) {
+  if (toLowerCaseText(kittenDataList[2].desc).includes(descValue)) {
+    list += Kitten3;
+  }
+
+  KittenList.innerHTML = list;
+}
+
+function filterKittenOnlyRace() {
+  let list = '';
+  const raceValue = toLowerCaseText(inputSearchRace.value);
+  if (toLowerCaseText(kittenDataList[0].race).includes(raceValue)) {
+    list = Kitten1;
+  }
+
+  if (toLowerCaseText(kittenDataList[1].race).includes(raceValue)) {
+    list += Kitten2;
+  }
+
+  if (toLowerCaseText(kittenDataList[2].race).includes(raceValue)) {
     list += Kitten3;
   }
 
@@ -49,25 +73,26 @@ function filterKittenOnlyDesc() {
 
 function filterKittenBoth() {
   let list = '';
-  const descValue = inputSearchDesc.value;
-  const raceValue = inputSearchRace.value;
+  const descValue = toLowerCaseText(inputSearchDesc.value);
+  const raceValue = toLowerCaseText(inputSearchRace.value);
+
   if (
-    kittenDataList[0].desc.includes(descValue) &&
-    kittenDataList[0].desc.includes(raceValue)
+    toLowerCaseText(kittenDataList[0].desc).includes(descValue) &&
+    toLowerCaseText(kittenDataList[0].race).includes(raceValue)
   ) {
     list = Kitten1;
   }
 
   if (
-    kittenDataList[1].desc.includes(descValue) &&
-    kittenDataList[1].desc.includes(raceValue)
+    toLowerCaseText(kittenDataList[1].desc).includes(descValue) &&
+    toLowerCaseText(kittenDataList[1].race).includes(raceValue)
   ) {
     list += Kitten2;
   }
 
   if (
-    kittenDataList[2].desc.includes(descValue) &&
-    kittenDataList[2].desc.includes(raceValue)
+    toLowerCaseText(kittenDataList[2].desc).includes(descValue) &&
+    toLowerCaseText(kittenDataList[2].race).includes(raceValue)
   ) {
     list += Kitten3;
   }
@@ -129,12 +154,14 @@ function renderKittenList(kittenDataList) {
 //Event - Filter kittens by search (SEARCH)
 searchButton.addEventListener('click', (event) => {
   event.preventDefault();
-  const descValue = inputSearchDesc.value;
-  const raceValue = inputSearchRace.value;
+  const descValue = toLowerCaseText(inputSearchDesc.value);
+  const raceValue = toLowerCaseText(inputSearchRace.value);
   if (descValue === '' && raceValue === '') {
     emptyFilter();
   } else if (descValue !== '' && raceValue === '') {
     filterKittenOnlyDesc();
+  } else if (descValue === '' && raceValue !== '') {
+    filterKittenOnlyRace();
   } else if (descValue !== '' && raceValue !== '') {
     filterKittenBoth();
   }
