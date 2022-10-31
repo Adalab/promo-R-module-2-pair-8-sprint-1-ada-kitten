@@ -1,5 +1,3 @@
-'use strict';
-
 //FUNCTIONS
 
 //Function - Show / Hide kitten Form (FORM)
@@ -18,35 +16,6 @@ function handleClickNewCatForm(event) {
   }
 }
 
-//Function - get inputs values (FORM)
-function getPhotoInputForm(event) {
-  photoInputForm.addEventListener('input', (event) => {
-    let photoValue = event.currentTarget.value;
-    return photoValue;
-  });
-}
-
-function getNameInputForm(event) {
-  nameInputForm.addEventListener('input', (event) => {
-    let nameValue = event.currentTarget.value;
-    return nameValue;
-  });
-}
-
-function getRaceInputForm(event) {
-  raceInputForm.addEventListener('input', (event) => {
-    let raceValue = event.currentTarget.value;
-    return raceValue;
-  });
-}
-
-function getDescInputForm(event) {
-  descInputForm.addEventListener('input', (event) => {
-    let descValue = event.currentTarget.value;
-    return descValue;
-  });
-}
-
 //Function - Cancel New Kitten (FORM)
 function cancelNewKitten(event) {
   event.preventDefault();
@@ -58,25 +27,10 @@ function cancelNewKitten(event) {
   NewKittenForm.classList.add('collapsed');
 }
 
-//Functions - get input values (SEARCH)
-function getDescInput(event) {
-  inputSearchDesc.addEventListener('input', (event) => {
-    let descValue = event.currentTarget.value;
-    return descValue;
-  });
-}
-
-function getRaceInput(event) {
-  inputSearchRace.addEventListener('input', (event) => {
-    let raceValue = event.currentTarget.value;
-    return raceValue;
-  });
-}
-
 //Functions - Search Kittens by info (SEARCH)
 function filterKittenOnlyDesc() {
   let list = '';
-  const descValue = getDescInput();
+  const descValue = inputSearchDesc.value;
 
   if (kittenDataList[0].desc.includes(descValue)) {
     list = Kitten1;
@@ -95,8 +49,8 @@ function filterKittenOnlyDesc() {
 
 function filterKittenBoth() {
   let list = '';
-  const descValue = getDescInput();
-  const raceValue = getRaceInput();
+  const descValue = inputSearchDesc.value;
+  const raceValue = inputSearchRace.value;
   if (
     kittenDataList[0].desc.includes(descValue) &&
     kittenDataList[0].desc.includes(raceValue)
@@ -128,12 +82,9 @@ function emptyFilter() {
 
 //Function - Race not specified
 function renderRace(kittenRace) {
-  // console.log("Estoy aquí");
   if (kittenRace === '') {
-    // console.log("Sigo aquí");
     return '<p class="card_race">No se ha especificado la raza</p>';
   } else {
-    // console.log("Holi");
     return `<h3 class="card_race">${kittenRace}</h3>`;
   }
 }
@@ -142,14 +93,7 @@ function renderRace(kittenRace) {
 //(be careful with the order of the parameters in the functions)
 
 function renderKitten(kittenData) {
-  // kittenData.img =
-  //   'https://images.emedicinehealth.com/images/article/main_image/cat-scratch-disease.jpg';
-  // kittenData.name = 'fiona';
-  // kittenData.race = '';
-  // kittenData.race =
-  //   'Ruiseño, juguetón, le gusta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!';
-
-  const kitten = `<li class="card">
+  return `<li class="card">
      <article>      <img
         class="card_img"
          src="${kittenData.img}"
@@ -162,24 +106,7 @@ function renderKitten(kittenData) {
       </p>
     </article>
     </li>`;
-  return kitten;
 }
-
-function getNewKitten(imgValue, nameValue, raceValue, descValue) {
-  const newKitten = {
-    img: '',
-    name: '',
-    race: '',
-    desc: '',
-  };
-  newKitten.img = imgValue;
-  newKitten.name = nameValue;
-  newKitten.race = raceValue;
-  newKitten.desc = descValue;
-  kittenDataList.push(newKitten);
-}
-
-//Está todo correcto. El único problema es que al pasar el objeto lo reconoce como tal, pero al intentar acceder a sus propiedades desde dentro de la función dice que las propiedades no existen y nos devuelve undefined. Por qué??
 
 //Function - Render current kittens List
 // function renderKittenList(KittenArray) {
@@ -189,7 +116,7 @@ function getNewKitten(imgValue, nameValue, raceValue, descValue) {
 //     KittenList.innerHTML += renderKitten(KittenArray[i]);
 //   }
 // }
-
+//Otra forma de hacerlo
 function renderKittenList(kittenDataList) {
   KittenList.innerHTML = '';
   for (const kittenObject in kittenDataList) {
@@ -202,8 +129,8 @@ function renderKittenList(kittenDataList) {
 //Event - Filter kittens by search (SEARCH)
 searchButton.addEventListener('click', (event) => {
   event.preventDefault();
-  const descValue = getDescInput();
-  const raceValue = getDescInput();
+  const descValue = inputSearchDesc.value;
+  const raceValue = inputSearchRace.value;
   if (descValue === '' && raceValue === '') {
     emptyFilter();
   } else if (descValue !== '' && raceValue === '') {
@@ -219,16 +146,22 @@ headerIcon.addEventListener('click', handleClickNewCatForm);
 //Event - Add New Kitten (FORM)
 addBtn.addEventListener('click', (event) => {
   event.preventDefault();
-  let photoValue = getDescInputForm();
-  let nameValue = getNameInputForm();
-  let raceValue = getDescInputForm();
-  let descValue = getDescInputForm();
+  let photoValue = photoInputForm.value;
+  let nameValue = nameInputForm.value;
+  let raceValue = raceInputForm.value;
+  let descValue = descInputForm.value;
 
-  if (descValue === '' || photoValue === '' || nameValue === '') {
+  const addedKitten = {
+    img: photoValue,
+    name: nameValue,
+    race: raceValue,
+    desc: descValue,
+  };
+
+  if (photoValue === '' || nameValue === '' || descValue === '') {
     errorMessageForm.innerHTML = 'Debe rellenar todos los valores';
   } else {
-    getNewKitten(photoValue, nameValue, raceValue, descValue);
-    renderKittenList(kittenDataList);
+    KittenList.innerHTML += renderKitten(addedKitten);
   }
 });
 
