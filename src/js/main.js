@@ -80,6 +80,8 @@ const searchButton = document.querySelector('.js_in_search_button');
 const labelMessageSearchError = document.querySelector(
   '.js_label_in_search_error'
 );
+const descSearchValue = inputSearchDesc.value; //values cogidos del html directo, no del evento input
+const raceSearchValue = inputSearchRace.value; //values cogidos del html directo, no del evento input
 
 //Form
 const headerIcon = document.querySelector('.js-icon');
@@ -91,11 +93,6 @@ const inputRace = document.querySelector('.js-input-race');
 const addBtn = document.querySelector('.js-btn-add');
 const cancelBtn = document.querySelector('.js-cancel-button');
 const labelMessageError = document.querySelector('.js-label-error');
-
-let kittenData = {};
-
-const descSearchValue = inputSearchDesc.value; //values cogidos del html directo, no del evento input
-const raceSearchValue = inputSearchRace.value; //values cogidos del html directo, no del evento input
 
 //FUNCTIONS
 
@@ -117,24 +114,16 @@ function handleClickNewCatForm(event) {
 
 //FUNCTION - Include new kitten through form
 //(be careful with the order in the parameters)
-//change to include any kind of kitten through form or not
 function renderKitten(kittenData) {
-  NewKittenForm.addEventListener('input', (event) => {
-    kittenData = {
-      img: inputValues[0],
-      name: inputValues[1],
-      race: inputValues[2],
-      desc: inputValues[3],
-    };
-    return `<li class="card"><img class="card_img" src="${
-      kittenData.img
-    }" alt="gatito" /><h3 class="card_title">${
-      kittenData.name
-    }.name</h3><h4 class="card_race">${renderRace(
-      kittenData.race
-    )}</h4><p class="card_description">${kittenData.desc}.desc</p></li>`;
-  });
+  return `<li class="card"><img class="card_img" src="${
+    kittenData.img
+  }" alt="gatito" /><h3 class="card_title">${
+    kittenData.name
+  }.name</h3><h4 class="card_race">${renderRace(
+    kittenData.race
+  )}</h4><p class="card_description">${kittenData.desc}.desc</p></li>`;
 }
+//No sabemos como acceder a las propiedades de el objeto que pasamos como parámetro para imprimirlo cuando invoquemos la función "renderkitten". Nos da error y dice que no puede acceder a las propiedades de un elemento undefined, pero es un parametro y por supuesto estará undefined.
 
 // FUNCTION - Cancel New Kitten
 function cancelNewKitten(event) {
@@ -218,15 +207,15 @@ headerIcon.addEventListener('click', handleClickNewCatForm);
 //EVENT - Add New Kitten (FORM)
 addBtn.addEventListener('click', (event) => {
   event.preventDefault();
-  let valueDesc = inputDesc.value;
   let valuePhoto = inputPhoto.value;
   let valueName = inputName.value;
+  let valueDesc = inputDesc.value;
   let valueRace = inputRace.value;
 
   const addedKitten = {
-    desc: valueDesc,
     img: valuePhoto,
     name: valueName,
+    desc: valueDesc,
     race: valueRace,
   };
 
