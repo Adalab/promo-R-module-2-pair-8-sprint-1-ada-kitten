@@ -142,14 +142,21 @@ function renderRace(kittenRace) {
 //(be careful with the order of the parameters in the functions)
 
 function renderKitten(kittenData) {
+  // kittenData.img =
+  //   'https://images.emedicinehealth.com/images/article/main_image/cat-scratch-disease.jpg';
+  // kittenData.name = 'fiona';
+  // kittenData.race = '';
+  // kittenData.race =
+  //   'Ruiseño, juguetón, le gusta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!';
+
   const kitten = `<li class="card">
      <article>      <img
         class="card_img"
-         src=${kittenData.img}
+         src="${kittenData.img}"
          alt="gatito"
        />
        <h3 class="card_title">${kittenData.name}</h3>
-      <h3 class="card_race">${kittenData.race}</h3>
+      <h3 class="card_race">${renderRace(kittenData.race)}</h3>
       <p class="card_description">
       ${kittenData.desc}
       </p>
@@ -175,20 +182,20 @@ function getNewKitten(imgValue, nameValue, raceValue, descValue) {
 //Está todo correcto. El único problema es que al pasar el objeto lo reconoce como tal, pero al intentar acceder a sus propiedades desde dentro de la función dice que las propiedades no existen y nos devuelve undefined. Por qué??
 
 //Function - Render current kittens List
-function renderKittenList(KittenArray) {
+// function renderKittenList(KittenArray) {
+//   KittenList.innerHTML = '';
+//   let i = 0;
+//   for (i = 0; i <= KittenArray.length; i++) {
+//     KittenList.innerHTML += renderKitten(KittenArray[i]);
+//   }
+// }
+
+function renderKittenList(kittenDataList) {
   KittenList.innerHTML = '';
-  let i = 0;
-  for (i = 0; i <= KittenArray.length; i++) {
-    KittenList.innerHTML += renderKitten(KittenArray[i]);
+  for (const kittenObject in kittenDataList) {
+    KittenList.innerHTML += renderKitten(kittenDataList[kittenObject]);
   }
 }
-
-// function renderKittenList(kittenDataList) {
-//   KittenList.innerHTML = '';
-//   for (const kittenObject of kittenDataList) {
-//   }
-//   KittenList.innerHTML += renderKitten(kittenObject);
-// }
 
 //EVENTS
 
